@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOCKVYZ V2 DASHBOARD</title>
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --primary-dark: #0099cc;
+            --secondary: #a855f7;
+            --accent-pink: #ff006e;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --error: #ff3366;
+            --bg: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --bg-tertiary: #252d47;
+            --text: #e0e6ff;
+            --text-secondary: #a0a6c0;
+            --border: #2d3a57;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #0f1229 50%, #1a0a2e 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        MAIN LAYOUT - FLEXBOX                                */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        .main-container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Header spans full width */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 22px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .api-config {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .api-input {
+            padding: 10px 15px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 12px;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .api-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+            outline: none;
+        }
+
+        .api-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .api-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .status-indicator {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            min-width: 150px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--error);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background: var(--success);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        MAIN CONTENT AREA                                    */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        .content-wrapper {
+            display: flex;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Left Sidebar - Commands */
+        .sidebar {
+            width: 280px;
+            background: rgba(26, 31, 58, 0.8);
+            border-right: 2px solid var(--border);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px 0;
+            box-shadow: inset -2px 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .sidebar-title {
+            padding: 15px 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .command-box {
+            margin: 10px 10px;
+            padding: 12px 15px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .command-box:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+            left: 3px;
+        }
+
+        .command-box:hover::before {
+            left: 100%;
+        }
+
+        .command-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .command-status {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .command-status.active {
+            color: var(--success);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Tabs */
+        .tabs-section {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            background: rgba(26, 31, 58, 0.5);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .tabs-section::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tabs-section::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Content Panels */
+        .panel {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .panel.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        MONITOR SECTION - CHAT DISPLAY                       */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        .monitor-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .chat-area {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #000;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .message {
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--primary);
+            border-radius: 6px;
+            font-size: 12px;
+            word-break: break-word;
+        }
+
+        .message-author {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .message-content {
+            color: var(--text);
+        }
+
+        .chat-input-area {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 15px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+            outline: none;
+        }
+
+        .monitor-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stats-box {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        COMMAND PANELS - CUSTOMIZATION                       */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        .command-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .command-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .command-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-status {
+            padding: 6px 12px;
+            background: var(--success);
+            color: #000;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .card-status.inactive {
+            background: var(--error);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+            outline: none;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .form-hint {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, var(--error), var(--accent-pink));
+            color: #fff;
+        }
+
+        .btn-stop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        ALERTS & NOTIFICATIONS                               */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        .alert-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 2000;
+            max-width: 400px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            animation: slideIn 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .alert.success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .alert.error {
+            background: rgba(255, 51, 102, 0.1);
+            border: 2px solid var(--error);
+            color: var(--error);
+        }
+
+        .alert.info {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .alert-close {
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        RESPONSIVE DESIGN                                    */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        @media (max-width: 1400px) {
+            .command-panel {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .api-config {
+                max-width: 400px;
+            }
+
+            .monitor-container {
+                grid-template-columns: 1fr;
+            }
+
+            .monitor-sidebar {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .header {
+                padding: 0 15px;
+            }
+
+            .api-config {
+                max-width: 250px;
+            }
+
+            .command-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text h1 {
+                font-size: 18px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+        /*                        METRICS DASHBOARD                                    */
+        /* ═══════════════════════════════════════════════════════════════════════════ */
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-card::before {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            margin: 0 auto 15px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Log Panel */
+        .log-panel {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .log-container {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .log-entry.success {
+            color: var(--success);
+        }
+
+        .log-entry.error {
+            color: var(--error);
+        }
+
+        .log-entry.info {
+            color: var(--primary);
+        }
+
+        .log-timestamp {
+            color: var(--text-secondary);
+            margin-right: 10px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">
+                    <h1>CLOCKVYZ</h1>
+                    <p>Discord Automation Control Panel</p>
+                </div>
+            </div>
+            <div class="api-config">
+                <input type="text" id="apiEndpoint" class="api-input" placeholder="API Endpoint (http://...)">
+                <button class="api-btn" onclick="saveApiConfig()">Connect</button>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Disconnected</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-title">📊 Active Commands</div>
+            <div id="commandsList"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <div class="main-content">
+                <!-- Tabs -->
+                <div class="tabs-section">
+                    <button class="tab-btn active" onclick="switchTab('monitor')">📡 Monitor</button>
+                    <button class="tab-btn" onclick="switchTab('spam')">💬 Spam</button>
+                    <button class="tab-btn" onclick="switchTab('voice')">🎵 Voice</button>
+                    <button class="tab-btn" onclick="switchTab('utilities')">⚙️ Utilities</button>
+                    <button class="tab-btn" onclick="switchTab('rpc')">🎮 RPC</button>
+                    <button class="tab-btn" onclick="switchTab('metrics')">📈 Metrics</button>
+                    <button class="tab-btn" onclick="switchTab('logs')">📋 Logs</button>
+                </div>
+
+                <!-- Monitor Tab -->
+                <div id="monitor" class="panel active">
+                    <div class="monitor-container">
+                        <!-- Chat Area -->
+                        <div class="chat-area">
+                            <div class="chat-header">
+                                <div>
+                                    <strong>Channel Monitor</strong>
+                                    <span id="channelName" style="margin-left: 10px; font-size: 12px;">Not connected</span>
+                                </div>
+                                <div id="onlineCount" style="font-size: 12px;">0 online</div>
+                            </div>
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="empty-state">
+                                    <div class="empty-icon">💬</div>
+                                    <div class="empty-text">Connect API and set Channel ID to start monitoring</div>
+                                </div>
+                            </div>
+                            <div class="chat-input-area">
+                                <input type="text" class="chat-input" id="chatInput" placeholder="Enter Channel ID to monitor...">
+                                <button class="btn btn-primary" onclick="startMonitoring()" style="flex: 0 0 100px;">Monitor</button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Sidebar -->
+                        <div class="monitor-sidebar">
+                            <div class="stats-box">
+                                <div class="stats-title">⚡ System Status</div>
+                                <div class="stat-item">
+                                    <span class="stat-label">CPU Usage</span>
+                                    <span class="stat-value" id="cpuValue">0%</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Memory</span>
+                                    <span class="stat-value" id="ramValue">0 MB</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Bot Status</span>
+                                    <span class="stat-value" id="botStatus">OFFLINE</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Commands Executed</span>
+                                    <span class="stat-value" id="commandCount">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Uptime</span>
+                                    <span class="stat-value" id="uptime">0h</span>
+                                </div>
+                            </div>
+
+                            <div class="stats-box">
+                                <div class="stats-title">🔧 Quick Actions</div>
+                                <button class="btn btn-primary" onclick="testPing()" style="width: 100%; margin-bottom: 10px;">
+                                    🔍 Ping API
+                                </button>
+                                <button class="btn btn-secondary" onclick="refreshMetrics()" style="width: 100%;">
+                                    🔄 Refresh Stats
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spam Tab -->
+                <div id="spam" class="panel">
+                    <div class="command-panel">
+                        <!-- Auto Beef -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Auto Beef (AB)</span>
+                                <span class="card-status" id="ab_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <input type="text" id="ab_message" class="form-input" placeholder="Enter message...">
+                                <div class="form-hint">Message to auto-send</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delay (seconds)</label>
+                                <input type="number" id="ab_delay" class="form-input" value="0.5" step="0.1">
+                                <div class="form-hint">Delay between messages</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Count</label>
+                                <input type="number" id="ab_count" class="form-input" value="10" min="1">
+                                <div class="form-hint">Number of messages</div>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('ab')">▶ Start AB</button>
+                                <button class="btn btn-stop" onclick="executeCommand('ab_stop')">⏹ Stop AB</button>
+                            </div>
+                        </div>
+
+                        <!-- Spam -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Spam</span>
+                                <span class="card-status" id="spam_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <input type="text" id="spam_message" class="form-input" placeholder="Enter message...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Count</label>
+                                <input type="number" id="spam_count" class="form-input" value="5" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delay (ms)</label>
+                                <input type="number" id="spam_delay" class="form-input" value="0" min="0">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('spam')">▶ Spam</button>
+                                <button class="btn btn-stop" onclick="executeCommand('spam_stop')">⏹ Stop</button>
+                            </div>
+                        </div>
+
+                        <!-- Burst -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Burst</span>
+                                <span class="card-status" id="burst_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Messages (use | to separate)</label>
+                                <textarea id="burst_message" class="form-textarea" placeholder="msg1|msg2|msg3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Count</label>
+                                <input type="number" id="burst_count" class="form-input" value="3" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delay (ms)</label>
+                                <input type="number" id="burst_delay" class="form-input" value="100" min="0">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('burst')">▶ Burst</button>
+                            </div>
+                        </div>
+
+                        <!-- Type Spam -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Typing Spam</span>
+                                <span class="card-status" id="typing_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Duration (seconds)</label>
+                                <input type="number" id="typing_duration" class="form-input" value="10" min="1">
+                                <div class="form-hint">How long to show typing indicator</div>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('typingspam')">▶ Type Spam</button>
+                                <button class="btn btn-stop" onclick="executeCommand('typingspam_stop')">⏹ Stop</button>
+                            </div>
+                        </div>
+
+                        <!-- Send Message -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Send Message</span>
+                                <span class="card-status" id="send_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Channel ID</label>
+                                <input type="text" id="send_channel" class="form-input" placeholder="Channel ID...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <textarea id="send_message" class="form-textarea" placeholder="Enter message..."></textarea>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('send')">📤 Send</button>
+                            </div>
+                        </div>
+
+                        <!-- Clear Messages -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Clear Messages</span>
+                                <span class="card-status" id="clear_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Number of Messages</label>
+                                <input type="number" id="clear_count" class="form-input" value="10" min="1" max="100">
+                                <div class="form-hint">Messages to delete (0-100)</div>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('clear')">🗑️ Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- React -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">React</span>
+                                <span class="card-status" id="react_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message ID</label>
+                                <input type="text" id="react_message_id" class="form-input" placeholder="Message ID...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Emojis (comma-separated)</label>
+                                <input type="text" id="react_emojis" class="form-input" placeholder="👍, ❤️, 🔥...">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('react')">⭐ React</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Tab -->
+                <div id="voice" class="panel">
+                    <div class="command-panel">
+                        <!-- Voice Join -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Voice Join</span>
+                                <span class="card-status" id="vcjoin_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Channel ID</label>
+                                <input type="text" id="vcjoin_channel" class="form-input" placeholder="Voice Channel ID...">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('vcjoin')">🔗 Join</button>
+                                <button class="btn btn-stop" onclick="executeCommand('vcleave')">❌ Leave</button>
+                            </div>
+                        </div>
+
+                        <!-- Voice Play -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Voice Play Audio</span>
+                                <span class="card-status" id="play_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Audio URL</label>
+                                <input type="text" id="play_url" class="form-input" placeholder="Audio URL...">
+                                <div class="form-hint">Direct link to MP3/WAV file</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Volume (0.1 - 10.0)</label>
+                                <input type="number" id="play_volume" class="form-input" value="5.0" min="0.1" max="10" step="0.1">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('play')">▶️ Play</button>
+                                <button class="btn btn-stop" onclick="executeCommand('vcstop')">⏹ Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Utilities Tab -->
+                <div id="utilities" class="panel">
+                    <div class="command-panel">
+                        <!-- Profile Picture -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Change PFP</span>
+                                <span class="card-status" id="pfp_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Image URL</label>
+                                <input type="text" id="pfp_url" class="form-input" placeholder="Image URL...">
+                                <div class="form-hint">Direct link to image file</div>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('pfp')">📸 Change PFP</button>
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">Status</span>
+                                <span class="card-status" id="status_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Status Type</label>
+                                <select id="status_type" class="form-select">
+                                    <option value="playing">Playing</option>
+                                    <option value="streaming">Streaming</option>
+                                    <option value="listening">Listening</option>
+                                    <option value="watching">Watching</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Activity Text</label>
+                                <input type="text" id="status_text" class="form-input" placeholder="Status text...">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('status')">⚡ Set Status</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RPC Tab -->
+                <div id="rpc" class="panel">
+                    <div class="command-panel">
+                        <!-- RPC Slot 1 -->
+                        <div class="command-card">
+                            <div class="card-header">
+                                <span class="card-title">RPC Slot 1</span>
+                                <span class="card-status" id="rpc1_status">Ready</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input type="text" id="rpc1_name" class="form-input" placeholder="Application name...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Details</label>
+                                <input type="text" id="rpc1_details" class="form-input" placeholder="Details...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">State</label>
+                                <input type="text" id="rpc1_state" class="form-input" placeholder="Current state...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Type</label>
+                                <select id="rpc1_type" class="form-select">
+                                    <option value="playing">Playing</option>
+                                    <option value="streaming">Streaming</option>
+                                    <option value="listening">Listening</option>
+                                    <option value="watching">Watching</option>
+                                </select>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn btn-primary" onclick="executeCommand('rpc1')">🎮 Apply RPC 1</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrics Tab -->
+                <div id="metrics" class="panel">
+                    <div class="metrics-grid" id="metricsGrid">
+                        <div class="metric-card">
+                            <div class="metric-label">CPU Usage</div>
+                            <div class="metric-value" id="metricCpu">0%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Memory</div>
+                            <div class="metric-value" id="metricRam">0 MB</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Bot Status</div>
+                            <div class="metric-value" id="metricStatus">OFFLINE</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Commands</div>
+                            <div class="metric-value" id="metricCommands">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Uptime</div>
+                            <div class="metric-value" id="metricUptime">0h</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Response Time</div>
+                            <div class="metric-value" id="metricLatency">0ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logs Tab -->
+                <div id="logs" class="panel log-panel">
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button class="btn btn-primary" onclick="refreshLogs()" style="flex: 1;">🔄 Refresh Logs</button>
+                        <button class="btn btn-secondary" onclick="clearLogs()" style="flex: 1;">🗑️ Clear Logs</button>
+                    </div>
+                    <div class="log-container" id="logContainer">
+                        <div class="log-entry info"><span class="log-timestamp">[System]</span> Logs initialized. Connect to API to see command logs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Container -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // GLOBAL STATE
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        let apiEndpoint = localStorage.getItem('apiEndpoint') || 'http://localhost:20597';
+        let commandLog = [];
+        let monitoringChannel = null;
+        let commandsData = {};
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('apiEndpoint').value = apiEndpoint;
+            loadCommandsList();
+            refreshMetrics();
+            setInterval(refreshMetrics, 3000);
+        });
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // API CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function saveApiConfig() {
+            const endpoint = document.getElementById('apiEndpoint').value;
+            if (!endpoint) {
+                showAlert('Please enter an API endpoint', 'error');
+                return;
+            }
+            apiEndpoint = endpoint;
+            localStorage.setItem('apiEndpoint', apiEndpoint);
+            showAlert('✅ API Endpoint saved!', 'success');
+            testPing();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // TAB SWITCHING
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function switchTab(tabName) {
+            // Hide all panels
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // Show selected panel
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate selected button
+            event.target.classList.add('active');
+            
+            logCommand(`Switched to ${tabName} panel`, 'info');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // COMMAND EXECUTION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function executeCommand(cmd) {
+            let endpoint = '';
+            let payload = {};
+
+            try {
+                // Build payload based on command type
+                if (cmd === 'ab') {
+                    payload = {
+                        message: document.getElementById('ab_message').value,
+                        delay: parseFloat(document.getElementById('ab_delay').value),
+                        count: parseInt(document.getElementById('ab_count').value)
+                    };
+                    endpoint = 'ab';
+                } else if (cmd === 'ab_stop') {
+                    endpoint = 'ab_stop';
+                } else if (cmd === 'burst') {
+                    const messages = document.getElementById('burst_message').value.split('|');
+                    payload = {
+                        messages: messages,
+                        count: parseInt(document.getElementById('burst_count').value),
+                        delay: parseInt(document.getElementById('burst_delay').value)
+                    };
+                    endpoint = 'burst';
+                } else if (cmd === 'spam') {
+                    payload = {
+                        message: document.getElementById('spam_message').value,
+                        count: parseInt(document.getElementById('spam_count').value),
+                        delay: parseInt(document.getElementById('spam_delay').value)
+                    };
+                    endpoint = 'spam';
+                } else if (cmd === 'spam_stop') {
+                    endpoint = 'spam_stop';
+                } else if (cmd === 'typingspam') {
+                    payload = {
+                        duration: parseInt(document.getElementById('typing_duration').value)
+                    };
+                    endpoint = 'typingspam';
+                } else if (cmd === 'typingspam_stop') {
+                    endpoint = 'typingspam_stop';
+                } else if (cmd === 'send') {
+                    payload = {
+                        channel_id: document.getElementById('send_channel').value,
+                        message: document.getElementById('send_message').value
+                    };
+                    endpoint = 'send';
+                } else if (cmd === 'clear') {
+                    payload = {
+                        count: parseInt(document.getElementById('clear_count').value)
+                    };
+                    endpoint = 'clear';
+                } else if (cmd === 'vcjoin') {
+                    payload = {
+                        channel_id: document.getElementById('vcjoin_channel').value
+                    };
+                    endpoint = 'vcjoin';
+                } else if (cmd === 'vcleave') {
+                    endpoint = 'vcleave';
+                } else if (cmd === 'vcstop') {
+                    endpoint = 'vcstop';
+                } else if (cmd === 'play') {
+                    payload = {
+                        url: document.getElementById('play_url').value,
+                        volume: parseFloat(document.getElementById('play_volume').value)
+                    };
+                    endpoint = 'play';
+                } else if (cmd === 'react') {
+                    const emojis = document.getElementById('react_emojis').value.split(',').map(e => e.trim());
+                    payload = {
+                        message_id: document.getElementById('react_message_id').value,
+                        emojis: emojis
+                    };
+                    endpoint = 'react';
+                } else if (cmd === 'pfp') {
+                    payload = {
+                        url: document.getElementById('pfp_url').value
+                    };
+                    endpoint = 'pfp';
+                } else if (cmd === 'status') {
+                    payload = {
+                        status: document.getElementById('status_type').value,
+                        activity: document.getElementById('status_text').value
+                    };
+                    endpoint = 'status';
+                } else if (cmd === 'rpc1') {
+                    payload = {
+                        name: document.getElementById('rpc1_name').value,
+                        details: document.getElementById('rpc1_details').value,
+                        state: document.getElementById('rpc1_state').value,
+                        type: document.getElementById('rpc1_type').value
+                    };
+                    endpoint = '1rpc';
+                }
+
+                logCommand(`⏳ Executing: .${endpoint}...`, 'info');
+
+                const response = await fetch(`${apiEndpoint}/api/command/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    logCommand(`✅ ${endpoint}: ${data.message || 'Success'}`, 'success');
+                    showAlert(`✅ Command executed: .${endpoint}`, 'success');
+                } else {
+                    logCommand(`❌ ${endpoint}: ${data.detail || 'Failed'}`, 'error');
+                    showAlert(`❌ Error: ${data.detail || 'Command failed'}`, 'error');
+                }
+            } catch (error) {
+                logCommand(`❌ Error: ${error.message}`, 'error');
+                showAlert(`❌ Connection error: ${error.message}`, 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // MONITORING
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function startMonitoring() {
+            const channelId = document.getElementById('chatInput').value;
+            if (!channelId) {
+                showAlert('Please enter a Channel ID', 'error');
+                return;
+            }
+            
+            monitoringChannel = channelId;
+            document.getElementById('channelName').textContent = `ID: ${channelId}`;
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="message">
+                    <div class="message-author">📡 Monitor</div>
+                    <div class="message-content">Monitoring channel ${channelId}. Messages will appear here.</div>
+                </div>
+            `;
+            
+            logCommand(`Started monitoring channel ${channelId}`, 'success');
+            showAlert(`✅ Monitoring channel ${channelId}`, 'success');
+        }
+
+        function addMessage(author, content, timestamp) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = 'message';
+            messageEl.innerHTML = `
+                <div class="message-author">${author}</div>
+                <div class="message-time">${timestamp}</div>
+                <div class="message-content">${content}</div>
+            `;
+            chatMessages.appendChild(messageEl);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // COMMANDS LIST SIDEBAR
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function loadCommandsList() {
+            const commands = [
+                { name: 'Auto Beef', status: 'Ready', icon: '💬' },
+                { name: 'Spam', status: 'Ready', icon: '📢' },
+                { name: 'Burst', status: 'Ready', icon: '⚡' },
+                { name: 'Type Spam', status: 'Ready', icon: '⌨️' },
+                { name: 'Voice Join', status: 'Idle', icon: '🔊' },
+                { name: 'Audio Play', status: 'Idle', icon: '🎵' },
+                { name: 'Profile Pic', status: 'Ready', icon: '📸' },
+                { name: 'Status', status: 'Ready', icon: '⚡' },
+                { name: 'RPC', status: 'Ready', icon: '🎮' },
+            ];
+
+            const commandsList = document.getElementById('commandsList');
+            commandsList.innerHTML = '';
+
+            commands.forEach(cmd => {
+                const box = document.createElement('div');
+                box.className = 'command-box';
+                box.innerHTML = `
+                    <div class="command-name">${cmd.icon} ${cmd.name}</div>
+                    <div class="command-status ${cmd.status === 'Ready' ? 'active' : ''}">${cmd.status}</div>
+                `;
+                commandsList.appendChild(box);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // METRICS & STATUS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function refreshMetrics() {
+            try {
+                const response = await fetch(`${apiEndpoint}/api/metrics`);
+                if (!response.ok) throw new Error('Cannot fetch metrics');
+
+                const data = await response.json();
+                
+                // Update header stats
+                document.getElementById('cpuValue').textContent = (data.cpu_percent || 0).toFixed(1) + '%';
+                document.getElementById('ramValue').textContent = Math.round(data.memory_mb || 0) + ' MB';
+                document.getElementById('botStatus').textContent = data.bot_status || 'OFFLINE';
+                document.getElementById('commandCount').textContent = data.commands_executed || 0;
+                document.getElementById('uptime').textContent = data.uptime || '0h';
+
+                // Update metrics tab
+                document.getElementById('metricCpu').textContent = (data.cpu_percent || 0).toFixed(1) + '%';
+                document.getElementById('metricRam').textContent = Math.round(data.memory_mb || 0) + ' MB';
+                document.getElementById('metricStatus').textContent = data.bot_status || 'OFFLINE';
+                document.getElementById('metricCommands').textContent = data.commands_executed || 0;
+                document.getElementById('metricUptime').textContent = data.uptime || '0h';
+
+                updateStatusIndicator(true);
+            } catch (error) {
+                updateStatusIndicator(false);
+            }
+        }
+
+        function updateStatusIndicator(connected = false) {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            if (connected) {
+                dot.classList.add('connected');
+                text.textContent = '✓ Connected';
+            } else {
+                dot.classList.remove('connected');
+                text.textContent = '✕ Disconnected';
+            }
+        }
+
+        async function testPing() {
+            const start = Date.now();
+            try {
+                const response = await fetch(`${apiEndpoint}/api/status`);
+                const latency = Date.now() - start;
+                if (response.ok) {
+                    document.getElementById('metricLatency').textContent = latency + 'ms';
+                    showAlert(`✅ Ping: ${latency}ms`, 'success');
+                    logCommand(`Ping successful: ${latency}ms`, 'success');
+                } else {
+                    throw new Error('API offline');
+                }
+            } catch (error) {
+                showAlert(`❌ Ping failed: ${error.message}`, 'error');
+                logCommand(`Ping failed: ${error.message}`, 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // LOGGING
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function logCommand(msg, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = { timestamp, msg, type };
+            commandLog.push(entry);
+
+            const logContainer = document.getElementById('logContainer');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span><span>${msg}</span>`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+
+            // Keep last 100 entries
+            if (commandLog.length > 100) {
+                commandLog.shift();
+                logContainer.removeChild(logContainer.firstChild);
+            }
+        }
+
+        function refreshLogs() {
+            logCommand('Logs refreshed', 'info');
+        }
+
+        function clearLogs() {
+            commandLog = [];
+            document.getElementById('logContainer').innerHTML = '';
+            logCommand('Logs cleared', 'info');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // ALERTS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function showAlert(message, type = 'info') {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert ${type}`;
+            alert.innerHTML = `
+                <span>${message}</span>
+                <span class="alert-close" onclick="this.parentElement.remove()">✕</span>
+            `;
+            container.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        }
+
+        // Load initial API endpoint from localStorage
+        window.addEventListener('load', () => {
+            testPing();
+        });
+    </script>
+</body>
+</html>
