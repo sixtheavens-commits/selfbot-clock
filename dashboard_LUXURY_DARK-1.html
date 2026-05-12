@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOCKVYZ V2 - LUXURY DARK</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --neon-pink: #ff006e;
+            --neon-purple: #b333ff;
+            --neon-purple-light: #d966ff;
+            --dark-bg: #0d0014;
+            --dark-surface: #1a0033;
+            --dark-elevation: #2d0052;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
+            --success: #00ff88;
+            --error: #ff1744;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000000;
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-pink);
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.6);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 110, 0.9);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* MAIN LAYOUT */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a0033 0%, #0d0014 50%, #000000 100%);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* HEADER */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            background: linear-gradient(180deg, #1a0033 0%, #0d0014 100%);
+            backdrop-filter: blur(30px);
+            border-bottom: 3px solid var(--neon-pink);
+            z-index: 1000;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 900;
+            box-shadow: 0 0 40px rgba(255, 0, 110, 0.8), inset 0 0 20px rgba(211, 102, 255, 0.4);
+            border: 2px solid var(--neon-pink);
+        }
+
+        .logo-text h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-shadow: 0 0 30px rgba(255, 0, 110, 0.8), 0 0 60px rgba(211, 102, 255, 0.4);
+            letter-spacing: 3px;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        .api-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex: 1;
+            max-width: 550px;
+            margin-left: 50px;
+        }
+
+        .api-input {
+            padding: 14px 20px;
+            background: rgba(255, 0, 110, 0.05);
+            border: 2px solid var(--neon-pink);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            flex: 1;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 0 10px rgba(255, 0, 110, 0.1);
+        }
+
+        .api-input:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.6), inset 0 0 15px rgba(255, 0, 110, 0.15);
+        }
+
+        .api-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            border: 2px solid var(--neon-pink);
+            border-radius: 12px;
+            color: white;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .api-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.8), 0 0 30px rgba(211, 102, 255, 0.6);
+        }
+
+        .status-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            min-width: 200px;
+            justify-content: flex-end;
+        }
+
+        .status-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--error);
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px var(--error);
+            border: 2px solid var(--error);
+        }
+
+        .status-dot.connected {
+            background: var(--success);
+            box-shadow: 0 0 15px var(--success);
+            border-color: var(--success);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-text {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* MAIN CONTENT */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .content {
+            margin-top: 90px;
+            display: flex;
+            height: calc(100vh - 90px);
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* SIDEBAR */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .sidebar {
+            width: 320px;
+            background: linear-gradient(180deg, var(--dark-surface) 0%, var(--dark-bg) 100%);
+            border-right: 3px solid var(--neon-pink);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 30px 0;
+            box-shadow: inset -15px 0 30px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 0, 110, 0.2);
+        }
+
+        .sidebar-section {
+            margin-bottom: 35px;
+        }
+
+        .sidebar-title {
+            padding: 0 25px;
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 18px;
+            text-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+            border-left: 4px solid var(--neon-pink);
+            padding-left: 21px;
+        }
+
+        .cmd-box {
+            margin: 0 15px 14px 15px;
+            padding: 16px 18px;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.08), rgba(211, 102, 255, 0.05));
+            border: 2px solid var(--neon-pink);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 5px solid var(--neon-purple);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cmd-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .cmd-box:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.15), rgba(211, 102, 255, 0.12));
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 25px rgba(255, 0, 110, 0.4), inset 0 0 15px rgba(255, 0, 110, 0.1);
+            transform: translateX(8px);
+        }
+
+        .cmd-box:hover::before {
+            left: 100%;
+        }
+
+        .cmd-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            text-shadow: 0 0 12px rgba(255, 0, 110, 0.3);
+        }
+
+        .cmd-status {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+        }
+
+        .cmd-status.active {
+            color: var(--success);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* MAIN PANEL */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .main-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* TABS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            padding: 22px 35px;
+            background: linear-gradient(180deg, var(--dark-surface) 0%, var(--dark-bg) 100%);
+            border-bottom: 2px solid var(--neon-pink);
+            overflow-x: auto;
+            overflow-y: hidden;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            padding: 13px 26px;
+            background: rgba(255, 0, 110, 0.08);
+            border: 2px solid var(--neon-pink);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--neon-purple);
+            color: var(--text-primary);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            border-color: var(--neon-purple);
+            color: white;
+            box-shadow: 0 0 40px rgba(255, 0, 110, 0.6), 0 0 20px rgba(211, 102, 255, 0.4);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* PANELS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .panel {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 35px 40px;
+            background: linear-gradient(135deg, transparent, rgba(211, 102, 255, 0.03));
+        }
+
+        .panel.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* COMMAND GRID */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* COMMAND CARD */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.08), rgba(211, 102, 255, 0.06));
+            border: 2px solid var(--neon-pink);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 110, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(40px, 40px); }
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.4), 0 0 30px rgba(211, 102, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-8px);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid rgba(255, 0, 110, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            text-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+        }
+
+        .card-status {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--success), #00dd2f);
+            color: #000;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .card-status.inactive {
+            background: linear-gradient(135deg, var(--error), #ff3355);
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.5);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* FORM ELEMENTS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(255, 0, 110, 0.2);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255, 0, 110, 0.05);
+            border: 2px solid var(--neon-pink);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(255, 0, 110, 0.05);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 25px rgba(255, 0, 110, 0.4), inset 0 0 15px rgba(255, 0, 110, 0.1);
+            background: rgba(255, 0, 110, 0.08);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 90px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .form-hint {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 7px;
+            font-weight: 500;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* BUTTONS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .button-group {
+            display: flex;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: left 0.4s ease;
+            z-index: 0;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.7), 0 0 30px rgba(211, 102, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #ff1744, #ff3355);
+            color: white;
+            border-color: #ff1744;
+            box-shadow: 0 0 30px rgba(255, 23, 68, 0.4);
+        }
+
+        .btn-stop:hover {
+            box-shadow: 0 0 50px rgba(255, 23, 68, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 0, 110, 0.1);
+            color: var(--text-primary);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-pink);
+            color: white;
+            box-shadow: 0 0 40px rgba(255, 0, 110, 0.5);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* ALERTS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .alert-container {
+            position: fixed;
+            top: 110px;
+            right: 40px;
+            z-index: 2000;
+            max-width: 500px;
+        }
+
+        .alert {
+            padding: 18px 24px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            font-weight: 700;
+            border: 2px solid;
+            box-shadow: 0 0 30px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(500px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .alert.success {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .alert.error {
+            background: rgba(255, 23, 68, 0.1);
+            border-color: var(--error);
+            color: var(--error);
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.3);
+        }
+
+        .alert.info {
+            background: rgba(255, 0, 110, 0.1);
+            border-color: var(--neon-pink);
+            color: var(--text-primary);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+        }
+
+        .alert-close {
+            cursor: pointer;
+            font-weight: 900;
+            margin-left: 15px;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* METRICS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(211, 102, 255, 0.08));
+            border: 2px solid var(--neon-pink);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2);
+        }
+
+        .metric-card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.4);
+            transform: translateY(-8px);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            color: var(--text-primary);
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* MONITOR */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .monitor-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 30px;
+            height: 100%;
+        }
+
+        .chat-box {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.08), rgba(211, 102, 255, 0.06));
+            border: 2px solid var(--neon-pink);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2);
+        }
+
+        .chat-header {
+            padding: 22px 25px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            font-weight: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 13px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .message {
+            padding: 16px;
+            background: rgba(255, 0, 110, 0.08);
+            border-left: 4px solid var(--neon-pink);
+            border-radius: 10px;
+            font-size: 12px;
+            word-break: break-word;
+        }
+
+        .message-author {
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            text-shadow: 0 0 12px rgba(255, 0, 110, 0.3);
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .message-content {
+            color: var(--text-secondary);
+        }
+
+        .chat-input-area {
+            padding: 18px;
+            border-top: 2px solid rgba(255, 0, 110, 0.2);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 14px;
+            background: rgba(255, 0, 110, 0.05);
+            border: 2px solid var(--neon-pink);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+        }
+
+        .stats-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(211, 102, 255, 0.08));
+            border: 2px solid var(--neon-pink);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2);
+        }
+
+        .stats-title {
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 0, 110, 0.3);
+            letter-spacing: 1.2px;
+            text-shadow: 0 0 12px rgba(255, 0, 110, 0.3);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .stat-value {
+            color: var(--text-primary);
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(255, 0, 110, 0.3);
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* LOGS */
+        /* ════════════════════════════════════════════════════════════ */
+
+        .log-container {
+            background: rgba(255, 0, 110, 0.08);
+            border: 2px solid var(--neon-pink);
+            border-radius: 16px;
+            padding: 22px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            overflow-y: auto;
+            max-height: 450px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2);
+        }
+
+        .log-entry {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 0, 110, 0.1);
+        }
+
+        .log-entry.success {
+            color: var(--success);
+        }
+
+        .log-entry.error {
+            color: var(--error);
+        }
+
+        .log-entry.info {
+            color: var(--neon-pink);
+        }
+
+        .log-timestamp {
+            color: var(--text-secondary);
+            margin-right: 12px;
+            font-weight: 900;
+        }
+
+        /* ════════════════════════════════════════════════════════════ */
+        /* RESPONSIVE */
+        /* ════════════════════════════════════════════════════════════ */
+
+        @media (max-width: 1400px) {
+            .command-grid {
+                grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 280px;
+            }
+
+            .monitor-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-panel {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+            }
+
+            .command-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .header {
+                padding: 0 25px;
+                height: 80px;
+            }
+
+            .logo-text h1 {
+                font-size: 26px;
+            }
+
+            .api-section {
+                max-width: 300px;
+                margin-left: 20px;
+            }
+
+            .content {
+                margin-top: 80px;
+                height: calc(100vh - 80px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo-icon">⚡</div>
+            <div class="logo-text">
+                <h1>CLOCKVYZ</h1>
+                <p>Luxury Dark Edition</p>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <input type="text" id="apiEndpoint" class="api-input" placeholder="http://bothosting-ip:20597">
+            <button class="api-btn" onclick="saveApiConfig()">Connect</button>
+        </div>
+
+        <div class="status-section">
+            <div class="status-dot" id="statusDot"></div>
+            <div class="status-text" id="statusText">Disconnected</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">🎮 Commands</div>
+                <div id="commandsList"></div>
+            </div>
+        </div>
+
+        <!-- MAIN PANEL -->
+        <div class="main-panel">
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('monitor')">📡 Monitor</button>
+                <button class="tab-btn" onclick="switchTab('spam')">💬 Spam</button>
+                <button class="tab-btn" onclick="switchTab('voice')">🎵 Voice</button>
+                <button class="tab-btn" onclick="switchTab('utilities')">⚙️ Utilities</button>
+                <button class="tab-btn" onclick="switchTab('rpc')">🎮 RPC</button>
+                <button class="tab-btn" onclick="switchTab('metrics')">📊 Metrics</button>
+                <button class="tab-btn" onclick="switchTab('logs')">📋 Logs</button>
+            </div>
+
+            <!-- MONITOR TAB -->
+            <div id="monitor" class="panel active">
+                <div class="monitor-layout">
+                    <div class="chat-box">
+                        <div class="chat-header">
+                            <div>
+                                <span>Channel Monitor</span>
+                                <span id="channelName" style="margin-left: 20px; font-size: 11px; opacity: 0.85;">Not Connected</span>
+                            </div>
+                            <div id="onlineCount" style="font-size: 11px; opacity: 0.85;">0 online</div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div style="text-align: center; color: var(--text-secondary); padding: 50px 20px; font-size: 13px; font-weight: 600;">
+                                💬 Enter Channel ID to monitor live chat
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Channel ID...">
+                            <button class="btn btn-primary" onclick="startMonitoring()" style="flex: 0 0 130px; padding: 11px;">Monitor</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-panel">
+                        <div class="stats-box">
+                            <div class="stats-title">⚡ System</div>
+                            <div class="stat-item">
+                                <span class="stat-label">CPU</span>
+                                <span class="stat-value" id="cpuValue">0%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Memory</span>
+                                <span class="stat-value" id="ramValue">0 MB</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Status</span>
+                                <span class="stat-value" id="botStatus">OFFLINE</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Commands</span>
+                                <span class="stat-value" id="commandCount">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Uptime</span>
+                                <span class="stat-value" id="uptime">0h</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <div class="stats-title">🔧 Actions</div>
+                            <button class="btn btn-primary" onclick="testPing()" style="width: 100%; margin-bottom: 10px; padding: 11px; font-size: 11px;">🔍 Ping</button>
+                            <button class="btn btn-secondary" onclick="refreshMetrics()" style="width: 100%; padding: 11px; font-size: 11px;">🔄 Refresh</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SPAM TAB -->
+            <div id="spam" class="panel">
+                <div class="command-grid">
+                    <!-- Auto Beef -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Auto Beef</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <input type="text" id="ab_message" class="form-input" placeholder="Message...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Delay (sec)</label>
+                            <input type="number" id="ab_delay" class="form-input" value="0.5" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Count</label>
+                            <input type="number" id="ab_count" class="form-input" value="10" min="1">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('ab')">▶ Start</button>
+                            <button class="btn btn-stop" onclick="executeCommand('ab_stop')">⏹ Stop</button>
+                        </div>
+                    </div>
+
+                    <!-- Spam -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Spam</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <input type="text" id="spam_message" class="form-input" placeholder="Message...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Count</label>
+                            <input type="number" id="spam_count" class="form-input" value="5" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Delay (ms)</label>
+                            <input type="number" id="spam_delay" class="form-input" value="0" min="0">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('spam')">▶ Spam</button>
+                            <button class="btn btn-stop" onclick="executeCommand('spam_stop')">⏹ Stop</button>
+                        </div>
+                    </div>
+
+                    <!-- Burst -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Burst</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Messages (| separated)</label>
+                            <textarea id="burst_message" class="form-textarea" placeholder="msg1|msg2|msg3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Count</label>
+                            <input type="number" id="burst_count" class="form-input" value="3" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Delay (ms)</label>
+                            <input type="number" id="burst_delay" class="form-input" value="100" min="0">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('burst')">▶ Burst</button>
+                        </div>
+                    </div>
+
+                    <!-- Typing Spam -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Typing Spam</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Duration (sec)</label>
+                            <input type="number" id="typing_duration" class="form-input" value="10" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Channel ID (optional)</label>
+                            <input type="text" id="typing_channel" class="form-input" placeholder="Leave blank...">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('typingspam')">▶ Type</button>
+                            <button class="btn btn-stop" onclick="executeCommand('typingspam_stop')">⏹ Stop</button>
+                        </div>
+                    </div>
+
+                    <!-- Send Message -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Send Message</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Channel ID</label>
+                            <input type="text" id="send_channel" class="form-input" placeholder="Channel ID...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea id="send_message" class="form-textarea" placeholder="Message..."></textarea>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('send')">📤 Send</button>
+                        </div>
+                    </div>
+
+                    <!-- Clear Messages -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Clear Messages</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Count (max 100)</label>
+                            <input type="number" id="clear_count" class="form-input" value="10" min="1" max="100">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('clear')">🗑️ Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- React -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">React</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message ID</label>
+                            <input type="text" id="react_message_id" class="form-input" placeholder="Message ID...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Emojis (comma-separated)</label>
+                            <input type="text" id="react_emojis" class="form-input" placeholder="👍, ❤️, 🔥...">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('react')">⭐ React</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOICE TAB -->
+            <div id="voice" class="panel">
+                <div class="command-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Voice Join</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Channel ID</label>
+                            <input type="text" id="vcjoin_channel" class="form-input" placeholder="Voice Channel ID...">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('vcjoin')">🔗 Join</button>
+                            <button class="btn btn-stop" onclick="executeCommand('vcleave')">❌ Leave</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Play Audio</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Audio URL</label>
+                            <input type="text" id="play_url" class="form-input" placeholder="MP3/WAV URL...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Volume (0.1-10.0)</label>
+                            <input type="number" id="play_volume" class="form-input" value="5.0" min="0.1" max="10" step="0.1">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('play')">▶️ Play</button>
+                            <button class="btn btn-stop" onclick="executeCommand('vcstop')">⏹ Stop</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UTILITIES TAB -->
+            <div id="utilities" class="panel">
+                <div class="command-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Change PFP</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Image URL</label>
+                            <input type="text" id="pfp_url" class="form-input" placeholder="Image URL...">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('pfp')">📸 Change</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Set Status</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Type</label>
+                            <select id="status_type" class="form-select">
+                                <option value="playing">Playing</option>
+                                <option value="streaming">Streaming</option>
+                                <option value="listening">Listening</option>
+                                <option value="watching">Watching</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Text</label>
+                            <input type="text" id="status_text" class="form-input" placeholder="Status...">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('status')">⚡ Set</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RPC TAB -->
+            <div id="rpc" class="panel">
+                <div class="command-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">RPC Slot 1</span>
+                            <span class="card-status">Ready</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" id="rpc1_name" class="form-input" placeholder="App name...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Details</label>
+                            <input type="text" id="rpc1_details" class="form-input" placeholder="Details...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">State</label>
+                            <input type="text" id="rpc1_state" class="form-input" placeholder="State...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Type</label>
+                            <select id="rpc1_type" class="form-select">
+                                <option value="playing">Playing</option>
+                                <option value="streaming">Streaming</option>
+                                <option value="listening">Listening</option>
+                                <option value="watching">Watching</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="executeCommand('rpc1')">🎮 Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- METRICS TAB -->
+            <div id="metrics" class="panel">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">CPU Usage</div>
+                        <div class="metric-value" id="metricCpu">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Memory</div>
+                        <div class="metric-value" id="metricRam">0 MB</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Bot Status</div>
+                        <div class="metric-value" id="metricStatus">OFFLINE</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Commands</div>
+                        <div class="metric-value" id="metricCommands">0</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Uptime</div>
+                        <div class="metric-value" id="metricUptime">0h</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">API Latency</div>
+                        <div class="metric-value" id="metricLatency">0ms</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGS TAB -->
+            <div id="logs" class="panel" style="flex-direction: column; gap: 25px;">
+                <div style="display: flex; gap: 18px;">
+                    <button class="btn btn-primary" onclick="refreshLogs()" style="flex: 1; padding: 13px;">🔄 Refresh Logs</button>
+                    <button class="btn btn-secondary" onclick="clearLogs()" style="flex: 1; padding: 13px;">🗑️ Clear Logs</button>
+                </div>
+                <div class="log-container" id="logContainer">
+                    <div class="log-entry info"><span class="log-timestamp">[INIT]</span> Dashboard initialized. Connect to begin.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <script>
+        let apiEndpoint = localStorage.getItem('apiEndpoint') || 'http://localhost:20597';
+        let commandLog = [];
+        let monitoringChannel = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('apiEndpoint').value = apiEndpoint;
+            loadCommandsList();
+            refreshMetrics();
+            setInterval(refreshMetrics, 3000);
+        });
+
+        function saveApiConfig() {
+            const endpoint = document.getElementById('apiEndpoint').value;
+            if (!endpoint) {
+                showAlert('Enter API endpoint', 'error');
+                return;
+            }
+            apiEndpoint = endpoint;
+            localStorage.setItem('apiEndpoint', apiEndpoint);
+            showAlert('✅ API Endpoint saved!', 'success');
+            testPing();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            logCommand(`Switched to ${tabName}`, 'info');
+        }
+
+        async function executeCommand(cmd) {
+            let endpoint = '';
+            let payload = {};
+
+            try {
+                if (cmd === 'ab') {
+                    payload = {
+                        message: document.getElementById('ab_message').value,
+                        delay: parseFloat(document.getElementById('ab_delay').value),
+                        count: parseInt(document.getElementById('ab_count').value)
+                    };
+                    endpoint = 'ab';
+                } else if (cmd === 'ab_stop') {
+                    endpoint = 'ab_stop';
+                } else if (cmd === 'spam') {
+                    payload = {
+                        message: document.getElementById('spam_message').value,
+                        count: parseInt(document.getElementById('spam_count').value),
+                        delay: parseInt(document.getElementById('spam_delay').value)
+                    };
+                    endpoint = 'spam';
+                } else if (cmd === 'spam_stop') {
+                    endpoint = 'spam_stop';
+                } else if (cmd === 'burst') {
+                    payload = {
+                        messages: document.getElementById('burst_message').value.split('|'),
+                        count: parseInt(document.getElementById('burst_count').value),
+                        delay: parseInt(document.getElementById('burst_delay').value)
+                    };
+                    endpoint = 'burst';
+                } else if (cmd === 'typingspam') {
+                    payload = {
+                        duration: parseInt(document.getElementById('typing_duration').value)
+                    };
+                    endpoint = 'typingspam';
+                } else if (cmd === 'typingspam_stop') {
+                    endpoint = 'typingspam_stop';
+                } else if (cmd === 'send') {
+                    payload = {
+                        channel_id: document.getElementById('send_channel').value,
+                        message: document.getElementById('send_message').value
+                    };
+                    endpoint = 'send';
+                } else if (cmd === 'clear') {
+                    payload = {
+                        count: parseInt(document.getElementById('clear_count').value)
+                    };
+                    endpoint = 'clear';
+                } else if (cmd === 'react') {
+                    payload = {
+                        message_id: document.getElementById('react_message_id').value,
+                        emojis: document.getElementById('react_emojis').value.split(',').map(e => e.trim())
+                    };
+                    endpoint = 'react';
+                } else if (cmd === 'vcjoin') {
+                    payload = {
+                        channel_id: document.getElementById('vcjoin_channel').value
+                    };
+                    endpoint = 'vcjoin';
+                } else if (cmd === 'vcleave') {
+                    endpoint = 'vcleave';
+                } else if (cmd === 'vcstop') {
+                    endpoint = 'vcstop';
+                } else if (cmd === 'play') {
+                    payload = {
+                        url: document.getElementById('play_url').value,
+                        volume: parseFloat(document.getElementById('play_volume').value)
+                    };
+                    endpoint = 'play';
+                } else if (cmd === 'pfp') {
+                    payload = {
+                        url: document.getElementById('pfp_url').value
+                    };
+                    endpoint = 'pfp';
+                } else if (cmd === 'status') {
+                    payload = {
+                        status: document.getElementById('status_type').value,
+                        activity: document.getElementById('status_text').value
+                    };
+                    endpoint = 'status';
+                } else if (cmd === 'rpc1') {
+                    payload = {
+                        name: document.getElementById('rpc1_name').value,
+                        details: document.getElementById('rpc1_details').value,
+                        state: document.getElementById('rpc1_state').value,
+                        type: document.getElementById('rpc1_type').value
+                    };
+                    endpoint = '1rpc';
+                }
+
+                logCommand(`⏳ Executing .${endpoint}...`, 'info');
+
+                const response = await fetch(`${apiEndpoint}/api/command/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    logCommand(`✅ .${endpoint}: ${data.message || 'Success'}`, 'success');
+                    showAlert(`✅ Command executed`, 'success');
+                } else {
+                    logCommand(`❌ .${endpoint}: ${data.detail || 'Failed'}`, 'error');
+                    showAlert(`❌ ${data.detail || 'Failed'}`, 'error');
+                }
+            } catch (error) {
+                logCommand(`❌ ${error.message}`, 'error');
+                showAlert(`❌ ${error.message}`, 'error');
+            }
+        }
+
+        function loadCommandsList() {
+            const commands = [
+                { name: 'Auto Beef', icon: '💬' },
+                { name: 'Spam', icon: '📢' },
+                { name: 'Burst', icon: '⚡' },
+                { name: 'Type Spam', icon: '⌨️' },
+                { name: 'Send Message', icon: '📤' },
+                { name: 'Clear Messages', icon: '🗑️' },
+                { name: 'React', icon: '⭐' },
+                { name: 'Voice Join', icon: '🔊' },
+                { name: 'Play Audio', icon: '🎵' },
+                { name: 'Change PFP', icon: '📸' },
+                { name: 'Set Status', icon: '⚡' },
+                { name: 'RPC Slot 1', icon: '🎮' },
+            ];
+
+            const list = document.getElementById('commandsList');
+            list.innerHTML = '';
+            commands.forEach(cmd => {
+                const box = document.createElement('div');
+                box.className = 'cmd-box';
+                box.innerHTML = `<div class="cmd-name">${cmd.icon} ${cmd.name}</div><div class="cmd-status active">Ready</div>`;
+                list.appendChild(box);
+            });
+        }
+
+        async function refreshMetrics() {
+            try {
+                const response = await fetch(`${apiEndpoint}/api/metrics`);
+                if (!response.ok) throw new Error('Offline');
+
+                const data = await response.json();
+                
+                document.getElementById('cpuValue').textContent = (data.cpu_percent || 0).toFixed(1) + '%';
+                document.getElementById('ramValue').textContent = Math.round(data.memory_mb || 0) + ' MB';
+                document.getElementById('botStatus').textContent = data.bot_status || 'OFFLINE';
+                document.getElementById('commandCount').textContent = data.commands_executed || 0;
+                document.getElementById('uptime').textContent = data.uptime || '0h';
+
+                document.getElementById('metricCpu').textContent = (data.cpu_percent || 0).toFixed(1) + '%';
+                document.getElementById('metricRam').textContent = Math.round(data.memory_mb || 0) + ' MB';
+                document.getElementById('metricStatus').textContent = data.bot_status || 'OFFLINE';
+                document.getElementById('metricCommands').textContent = data.commands_executed || 0;
+                document.getElementById('metricUptime').textContent = data.uptime || '0h';
+
+                updateStatusIndicator(true);
+            } catch (error) {
+                updateStatusIndicator(false);
+            }
+        }
+
+        function updateStatusIndicator(connected = false) {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            if (connected) {
+                dot.classList.add('connected');
+                text.textContent = '✓ Connected';
+            } else {
+                dot.classList.remove('connected');
+                text.textContent = '✕ Disconnected';
+            }
+        }
+
+        async function testPing() {
+            const start = Date.now();
+            try {
+                const response = await fetch(`${apiEndpoint}/api/status`);
+                const latency = Date.now() - start;
+                if (response.ok) {
+                    document.getElementById('metricLatency').textContent = latency + 'ms';
+                    showAlert(`✅ Ping: ${latency}ms`, 'success');
+                    logCommand(`Ping: ${latency}ms`, 'success');
+                } else {
+                    throw new Error('API offline');
+                }
+            } catch (error) {
+                showAlert(`❌ Ping failed`, 'error');
+                logCommand(`Ping failed`, 'error');
+            }
+        }
+
+        function startMonitoring() {
+            const channelId = document.getElementById('chatInput').value;
+            if (!channelId) {
+                showAlert('Enter Channel ID', 'error');
+                return;
+            }
+            monitoringChannel = channelId;
+            document.getElementById('channelName').textContent = `Monitoring: ${channelId}`;
+            logCommand(`Started monitoring ${channelId}`, 'success');
+            showAlert(`✅ Monitoring channel`, 'success');
+        }
+
+        function logCommand(msg, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            commandLog.push({ timestamp, msg, type });
+
+            const logContainer = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> ${msg}`;
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+
+            if (commandLog.length > 100) {
+                commandLog.shift();
+                logContainer.removeChild(logContainer.firstChild);
+            }
+        }
+
+        function refreshLogs() {
+            logCommand('Logs refreshed', 'info');
+        }
+
+        function clearLogs() {
+            commandLog = [];
+            document.getElementById('logContainer').innerHTML = '';
+            logCommand('Logs cleared', 'info');
+        }
+
+        function showAlert(message, type = 'info') {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert ${type}`;
+            alert.innerHTML = `
+                <span>${message}</span>
+                <span class="alert-close" onclick="this.parentElement.remove()">✕</span>
+            `;
+            container.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        }
+
+        window.addEventListener('load', () => {
+            testPing();
+        });
+    </script>
+</body>
+</html>
